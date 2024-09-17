@@ -75,3 +75,5 @@ set incsearch
 " I have these options off because the macOS terminal handles this nicely
 " It flashes the screen when the sound is off
 " If I don't have a visual bell option available I can enable these
+
+set showcmd
