@@ -20,6 +20,7 @@ return {
         },
         config = function()
             local cmp = require('cmp')
+            local cmp_action = require('lsp-zero').cmp_action()
 
             cmp.setup({
                 sources = {
@@ -29,6 +30,11 @@ return {
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-d>'] = cmp.mapping.scroll_docs(4),
+                    -- Figured out the following two lines from:
+                    -- [[https://www.reddit.com/r/neovim/comments/13903t2/smooth_way_to_set_next_arg_after_function_call/jj0forf/]]
+                    -- and [[https://lsp-zero.netlify.app/docs/reference/lua-api.html#cmp-action]]
+                    ["<C-j>"] = cmp_action.vim_snippet_jump_forward(),
+                    ["<C-k>"] = cmp_action.vim_snippet_jump_backward(),
                 }),
                 snippet = {
                     expand = function(args)
@@ -67,6 +73,8 @@ return {
                 vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
                 vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
                 vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+                -- added by me, not default
+                vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
             end
 
             lsp_zero.extend_lspconfig({
