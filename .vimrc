@@ -77,3 +77,8 @@ set incsearch
 " If I don't have a visual bell option available I can enable these
 
 set showcmd
+
+nnoremap <F7> :tabprevious<CR>
+nnoremap <F8> :tabnext<CR>
+nnoremap <S-F7> :tabmove -1<CR>
+nnoremap <S-F8> :tabmove +1<CR>
