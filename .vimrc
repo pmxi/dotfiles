@@ -23,6 +23,9 @@ else
   endif
 endif
 
+" its annoying
+set nobackup
+
 if &t_Co > 2 || has("gui_running")
   " Switch on highlighting the last used search pattern.
   set hlsearch
@@ -82,3 +85,10 @@ nnoremap <F7> :tabprevious<CR>
 nnoremap <F8> :tabnext<CR>
 nnoremap <S-F7> :tabmove -1<CR>
 nnoremap <S-F8> :tabmove +1<CR>
+
+
+let mapleader = " "
+" copy the entire file to the clipboard
+nnoremap <leader>y :%y+<CR>
+" replace the entire file with the contents of the system clipboard
+nnoremap <leader>p :%delete _<Bar>0put +<CR>
