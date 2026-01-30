@@ -19,7 +19,8 @@ if has("vms")
 else
   set backup		" keep a backup file (restore to previous version)
   if has('persistent_undo')
-    set undofile	" keep an undo file (undo changes after closing)
+    " undofiles are really annoying
+    " set undofile	" keep an undo file (undo changes after closing)
   endif
 endif
 
@@ -92,3 +93,40 @@ let mapleader = " "
 nnoremap <leader>y :%y+<CR>
 " replace the entire file with the contents of the system clipboard
 nnoremap <leader>p :%delete _<Bar>0put +<CR>
+
+
+" chat written vimrc
+
+" --- Markdown-specific UX ---
+augroup MarkdownSettings
+  au!
+  autocmd FileType markdown call s:MarkdownSetup()
+  " handy buffer-local toggles
+  autocmd FileType markdown nnoremap <buffer> <leader>mw :setlocal wrap!<bar>setlocal linebreak<bar>setlocal breakindent<CR>
+  autocmd FileType markdown nnoremap <buffer> <leader>mc :if &l:conceallevel==0 \| setlocal conceallevel=2 \| else \| setlocal conceallevel=0 \| endif<CR>
+  autocmd FileType markdown nnoremap <buffer> <leader>cb I- [ ] <Esc>  " insert a checkbox at BOL
+augroup END
+
+function! s:MarkdownSetup() abort
+  " Soft wrap, but at word boundaries (not mid-word)
+  setlocal wrap
+  setlocal linebreak
+  setlocal breakindent
+  setlocal breakindentopt=sbr,shift:2
+  setlocal showbreak=↪\     " marker shown on wrapped screen lines
+
+  " Don't insert hard newlines while typing
+  setlocal textwidth=0
+  setlocal formatoptions-=t
+  setlocal formatoptions+=n   " keep numbered lists sane when formatting
+
+  " Writer-friendly helpers
+  setlocal spell spelllang=en_us
+  setlocal complete+=kspell
+
+  " See the markdown punctuation; toggle with <leader>mc
+  setlocal conceallevel=0
+endfunction
+
+" One-shot: reflow the current paragraph to 80 cols, then go back to soft-wrap
+autocmd FileType markdown nnoremap <buffer> <leader>fp :let b:_tw=&l:textwidth \| setlocal textwidth=80 \| normal! gqip \| let &l:textwidth=b:_tw \| unlet b:_tw<CR>
