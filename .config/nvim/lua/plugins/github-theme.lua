@@ -7,7 +7,7 @@ return {
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
             require('github-theme')
-            vim.cmd('colorscheme github_dark')
+            vim.cmd('colorscheme github_light')
         end,
     }
 }
