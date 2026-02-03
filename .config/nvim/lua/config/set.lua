@@ -20,3 +20,5 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.list = false
     end,
 })
+
+vim.opt.laststatus = 1
