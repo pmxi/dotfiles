@@ -4,27 +4,39 @@
 " Former Maintainer:	The Vim Project <https://github.com/vim/vim>
 " Former Maintainer:	Bram Moolenaar <Bram@vim.org>
 
+
+" TODO
+" Return to first principles for this vimrc. Much of this is inherited from
+" the default provided vimrc and is designed with old assumptions in mind.
+" I've commented out much of it. I need to evaluate its purpose and delete as
+" necessary. Then this can be vastly simplified.
+
 " When started as "evim", evim.vim will already have done these settings, bail
 " out.
-if v:progname =~? "evim"
-  finish
-endif
+" if v:progname =~? "evim"
+"   finish
+" endif
 
 " Get the defaults that most users want.
 source $VIMRUNTIME/defaults.vim
 
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file (restore to previous version)
-  if has('persistent_undo')
-    " undofiles are really annoying
-    " set undofile	" keep an undo file (undo changes after closing)
-  endif
-endif
+" if has("vms")
+"   set nobackup		" do not keep a backup file, use versions instead
+" else
+"   set backup		" keep a backup file (restore to previous version)
+"   if has('persistent_undo')
+"     " undofiles are really annoying
+"     " set undofile	" keep an undo file (undo changes after closing)
+"   endif
+" endif
 
-" its annoying
+" Disable all Vim functionality that creates additional files, or stores
+" data from text files elsewhere.
 set nobackup
+set noswapfile
+set noundofile
+set nowritebackup
+set viminfo=""
 
 if &t_Co > 2 || has("gui_running")
   " Switch on highlighting the last used search pattern.
