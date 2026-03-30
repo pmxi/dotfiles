@@ -1,0 +1,24 @@
+theme = light:Builtin Light,dark:Builtin Dark
+font-size = 18
+
+# disable ligatures
+# test ligatures: -> <=
+font-feature = -dlig
+font-feature = -liga
+font-feature = -calt
+
+mouse-scroll-multiplier = 3
+
+# yolo
+# I only did this to get search functionality.
+auto-update-channel = tip
+
+auto-update = off
+
+# experimental
+# not sure whether to keep or not.
+mouse-hide-while-typing = true
+
+confirm-close-surface = false
+
+# kitty +kitten icat snowperson.jpeg
