@@ -1,8 +1,8 @@
 alias config='/usr/bin/git --git-dir=/Users/paras/.cfg/ --work-tree=/Users/paras'
-alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"
+# alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+# export PYENV_ROOT="$HOME/.pyenv"
+# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init - zsh)"
 export PATH="$HOME/.local/bin:$PATH"
 
 # Added by Antigravity
@@ -169,4 +169,91 @@ function fssh() {
 }
 
 
-alias lfg='claude --dangerously-skip-permissions'
+fnvim() {
+  local file="$(fp)"
+  [[ -n "$file" ]] && nvim "$file"
+}
+
+fvim() {
+  local file="$(fp)"
+  [[ -n "$file" ]] && vim "$file"
+}
+
+alias lfg='claude --dangerously-skip-permissions --verbose --chrome'
+alias yolo='codex --dangerously-bypass-approvals-and-sandbox'
+
+ffind() {
+  local dir
+  dir="$(
+    {
+      fd . "$HOME" \
+        --type d \
+        --hidden \
+        --exclude /Library \
+        --exclude node_modules \
+        --exclude .venv \
+        --exclude venv \
+        --exclude __pycache__ \
+        --exclude .git \
+        --exclude site-packages \
+        --exclude .npm \
+        --exclude .nvm \
+        --exclude .pyenv \
+        --exclude Caches \
+        --exclude .cache \
+        --exclude .antigravity \
+        --exclude .vscode \
+        --exclude .gradle \
+        --exclude .nuget \
+        --exclude .ipfs
+      fd . "$HOME/Library/Mobile Documents" \
+        --type d \
+        --hidden \
+        --exclude node_modules \
+        --exclude .venv \
+        --exclude venv \
+        --exclude __pycache__ \
+        --exclude .git
+    } | fzf
+  )"
+
+  if [[ -n "$dir" ]]; then
+    open "$dir"
+  fi
+}
+
+export NVIM_APPNAME="nvim-new"
+
+
+# export PS1="\n\[\e[32m\]\u\[\e[m\] at \[\e[33m\]\h\[\e[m\] in \[\e[34m\]\w\[\e[m\] \n$ "
+#PROMPT='%F{green}%n%f at %F{yellow}%m%f in %F{blue}%~%f
+#%# '
+
+PROMPT=$'%F{green}%n@%m%f:%F{blue}%~%f\n%# '
+
+# for colors in ls
+export CLICOLOR=1
+alias svim='vim -X -n -i NONE --cmd "set noswapfile noundofile nobackup nowritebackup clipboard= noshelltemp"'
+# export GEMINI_API_KEY="$(security find-generic-password -a "$USER" -s GEMINI_API_KEY -w)"
+
+
+# experimental alias
+mc() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: mc <folder>"
+    return 1
+  fi
+
+  mkdir -p -- "$1" && cd -- "$1"
+}
+export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+_load_nvm() {
+  unset -f nvm node npm npx 2>/dev/null
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+}
+nvm()  { _load_nvm; nvm "$@"; }
+node() { _load_nvm; node "$@"; }
+npm()  { _load_nvm; npm "$@"; }
+npx()  { _load_nvm; npx "$@"; }
