@@ -80,7 +80,7 @@ set number
 set ruler
 
 " already set in defaults.vim
-"set so=5
+set so=0
 
 set incsearch
 
@@ -93,10 +93,10 @@ set incsearch
 
 set showcmd
 
-nnoremap <F7> :tabprevious<CR>
-nnoremap <F8> :tabnext<CR>
-nnoremap <S-F7> :tabmove -1<CR>
-nnoremap <S-F8> :tabmove +1<CR>
+" nnoremap <F7> :tabprevious<CR>
+" nnoremap <F8> :tabnext<CR>
+" nnoremap <S-F7> :tabmove -1<CR>
+" nnoremap <S-F8> :tabmove +1<CR>
 
 
 let mapleader = " "
@@ -106,5 +106,12 @@ nnoremap <leader>y :%y+<CR>
 nnoremap <leader>p :%delete _<Bar>0put +<CR>
 
 
-" don't wrap within words for markdown
-autocmd FileType markdown setlocal wrap linebreak nolist
+" I prefer to edit code with nowrap, read prose with wrap
+" TODO Here's a possible improvement: linebreak may only take affect when wrap
+" is enabled, so just turn it on globally (outside of autocmd).
+
+nnoremap <leader>w :set wrap!<CR>
+
+" wrap for prose
+autocmd FileType markdown,text,gitcommit,mail,rst,tex,asciidoc setlocal wrap linebreak
+
