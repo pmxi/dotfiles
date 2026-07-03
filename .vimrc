@@ -17,22 +17,15 @@ set noundofile
 set nowritebackup
 set viminfofile=NONE
 
-if &t_Co > 2 || has("gui_running")
-  " Switch on highlighting the last used search pattern.
-  set hlsearch
-endif
+" Switch on highlighting the last used search pattern.
+set hlsearch
 
-" Add optional packages.
-"
 " The matchit plugin makes the % command work better, but it is not backwards
 " compatible.
-" The ! means the package won't be loaded right away but when plugins are
-" loaded during initialization.
-if has('syntax') && has('eval')
-  packadd! matchit
-endif
+packadd! matchit
 
 
+" INDENTATION
 " use spaces for indentation
 filetype plugin indent on
 " show existing tab with 4 spaces width
@@ -44,25 +37,22 @@ set expandtab
 
 set autoindent
 
+" Display
 syntax on
 set number
-
-" Display current line and column on the bottom bar
-set ruler
-
-" already set in defaults.vim
-set so=0
-
+set ruler      " Display current line and column on the bottom bar
+set so=0       " override defaults.vim
+set showcmd
 set incsearch
 
-" Flash on the screen instead of making the bell sound
-" set noerrorbells
-" set visualbell
 " I have these options off because the macOS terminal handles this nicely
 " It flashes the screen when the sound is off
 " If I don't have a visual bell option available I can enable these
 
-set showcmd
+" Flash on the screen instead of making the bell sound
+" set noerrorbells
+" set visualbell
+
 
 
 " i used to use these in cs240
@@ -85,6 +75,7 @@ set linebreak
 
 nnoremap <leader>w :setlocal wrap!<CR>
 
+set nowrap
 " wrap for prose
 autocmd FileType markdown,text,gitcommit,mail,rst,tex,asciidoc setlocal wrap linebreak
 
